@@ -37,7 +37,6 @@ jobs:
           libgbm1 \
           libpango-1.0-0 \
           libpangocairo-1.0-0 \
-          libasound2 \
           libatspi2.0-0
     - name: Build & Install
       run: mvn -B install -D skipTests --no-transfer-progress
