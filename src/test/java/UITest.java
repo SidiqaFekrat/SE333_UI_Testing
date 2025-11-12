@@ -5,6 +5,9 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+
+import java.nio.file.Paths;
+
 import static org.assertj.core.api.Assertions.*;
 
 public class UITest {
@@ -20,14 +23,23 @@ public class UITest {
         browser = playwright.chromium().launch(new BrowserType.LaunchOptions()
                 .setHeadless(false));
         context = browser.newContext();
+        context = browser.newContext(new Browser.NewContextOptions()
+                .setRecordVideoDir(Paths.get("videos/"))
+                .setRecordVideoSize(1280, 720));
         page = context.newPage();
     }
 
     @AfterEach
     public void tearDown() {
-        context.close();
-        browser.close();
-        playwright.close();
+        if (context != null) {
+            context.close();
+        }
+        if (browser != null) {
+            browser.close();
+        }
+        if (playwright != null) {
+            playwright.close();
+        }
     }
 
     @Test
